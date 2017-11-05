@@ -43,6 +43,12 @@ WAD* loadWAD(char* wadFile)
 	Level* currentLevel = malloc(sizeof(Level));
 	//Level currentLevel;
 
+	Vertex inf; inf.x = 16000; inf.y = inf.x;
+	Vertex minf; minf.x = -inf.x; minf.y = -inf.x;
+
+	currentLevel->mapLowerLeft = inf;
+	currentLevel->mapUpperRight = minf;
+
 	int levelIndex = 0;
 
 	for (int i = 0; i < wad->header.numEntries; ++i)
@@ -62,7 +68,7 @@ WAD* loadWAD(char* wadFile)
 						if (isDigit(lumpInfos[i].name[4]))
 							isNameLump = 1;
 
-		printf("%s\n",lumpInfos[i].name);
+		//printf("%s\n",lumpInfos[i].name);
 
 		if (isNameLump)
 		{
@@ -74,7 +80,12 @@ WAD* loadWAD(char* wadFile)
 			{
 				currentLevel->numLines = lumpInfos[i].size / sizeof(LineDef);
 				currentLevel->lines = malloc(lumpInfos[i].size);
-				memcpy(currentLevel->lines, &data[lumpInfos[i].filepos], lumpInfos[i].size);
+				memcpy(currentLevel->lines, &data[lumpInfos[i].filepos-12], lumpInfos[i].size);
+
+				//for (int j = 0; j < currentLevel->numLines; ++j)
+				//{
+					//printf("a: %hd , b: %hd\n", currentLevel->lines[j].beginVertex, currentLevel->lines[j].endVertex);
+				//}
 			}
 			else if (compareString(lumpInfos[i].name, "SEDEDEFS", 8))
 			{
@@ -84,7 +95,24 @@ WAD* loadWAD(char* wadFile)
 			{
 				currentLevel->numVerts = lumpInfos[i].size / sizeof(Vertex);
 				currentLevel->vertices = malloc(lumpInfos[i].size);
-				memcpy(currentLevel->vertices, &data[lumpInfos[i].filepos], lumpInfos[i].size);
+				memcpy(currentLevel->vertices, &data[lumpInfos[i].filepos-12], lumpInfos[i].size);
+
+				for (int j = 0; j < currentLevel->numVerts; ++j)
+				{
+					//printf("V: %i, %i\n", currentLevel->vertices[j].x, currentLevel->vertices[j].y);
+
+					if (currentLevel->vertices[j].x < currentLevel->mapLowerLeft.x)
+						currentLevel->mapLowerLeft.x = currentLevel->vertices[j].x;
+
+					if (currentLevel->vertices[j].y < currentLevel->mapLowerLeft.y)
+						currentLevel->mapLowerLeft.y = currentLevel->vertices[j].y;
+
+					if (currentLevel->vertices[j].x > currentLevel->mapUpperRight.x)
+						currentLevel->mapUpperRight.x = currentLevel->vertices[j].x;
+
+					if (currentLevel->vertices[j].y > currentLevel->mapUpperRight.y)
+						currentLevel->mapUpperRight.y = currentLevel->vertices[j].y;
+				}
 			}
 			else if (compareString(lumpInfos[i].name, "THINGS", 6))
 			{

@@ -28,13 +28,13 @@
 
 typedef struct LineDef
 {
-	unsigned short beginVertex;
-	unsigned short endVertex;
-	unsigned short flags;
-	unsigned short type;
-	unsigned short sector;
-	unsigned short rightSide;
-	unsigned short leftSide;
+	short beginVertex;
+	short endVertex;
+	short flags;
+	short type;
+	short sector;
+	short rightSide;
+	short leftSide;
 } LineDef;
 
 typedef struct Vertex
@@ -48,12 +48,12 @@ typedef struct Level
 	char name[8];
 	
 	int numLines;
-	struct LineDef* lines;
+	LineDef* lines;
 	int numVerts;
-	struct Vertex* vertices;
+	Vertex* vertices;
 
-	struct ivec2 mapLowerLeft;
-	struct ivec2 mapUpperRight;
+	Vertex mapLowerLeft;
+	Vertex mapUpperRight;
 
 } Level;
 
@@ -73,8 +73,8 @@ typedef struct WADHeader
 
 typedef struct WAD
 {
-	struct WADHeader header;
-	struct Level levels[10]; 
+	WADHeader header;
+	Level levels[10]; 
 } WAD;
 
 WAD* loadWAD(char* wadFile);
