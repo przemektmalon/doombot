@@ -19,4 +19,6 @@ struct fvec2
 	float y;
 };
 
+int isDigit(char c);
+
 #endif

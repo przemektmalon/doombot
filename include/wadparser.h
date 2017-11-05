@@ -7,6 +7,7 @@
 
 #include "math.h"
 #include <io.h>
+#include <stdio.h>
 #include <stdlib.h> 
 
 // WAD lump types
@@ -25,7 +26,7 @@
 #define SCRIPTS 11
 #define MAX_LUMP_TYPES 12
 
-struct LineDef
+typedef struct LineDef
 {
 	unsigned short beginVertex;
 	unsigned short endVertex;
@@ -34,62 +35,48 @@ struct LineDef
 	unsigned short sector;
 	unsigned short rightSide;
 	unsigned short leftSide;
-};
+} LineDef;
 
-struct Vertex
+typedef struct Vertex
 {
 	signed short x;
 	signed short y;
-};
+} Vertex;
 
-struct Level
+typedef struct Level
 {
-	char* name;
+	char name[8];
 	
-	struct ivec2* lines;
+	int numLines;
+	struct LineDef* lines;
+	int numVerts;
 	struct Vertex* vertices;
 
 	struct ivec2 mapLowerLeft;
 	struct ivec2 mapUpperRight;
 
-};
+} Level;
 
-struct WADHeader
+typedef struct DirectoryEntry
+{
+	int filepos;
+	int size;
+	char name[8];
+} DirectoryEntry;
+
+typedef struct WADHeader
 {
 	char type[4];
 	int numEntries;
 	int dirLocation;
-};
+} WADHeader;
 
-struct WAD
+typedef struct WAD
 {
 	struct WADHeader header;
-	struct Level* levels;
-};
+	struct Level levels[10]; 
+} WAD;
 
-struct WAD* loadWAD(char* wadFile)
-{
-	FILE* wadf;
-	wadf = fopen(wadFile,"rb");
-
-	if (!wadf)
-	{
-		printf("Failed to open WAD file");
-		return 0;
-	}
-
-	struct WAD* wad = (struct WAD*)malloc(sizeof(struct WAD));
-
-	fread(&wad->header, sizeof(struct WADHeader), 1, wadf);
-
-	printf("%c", wad->header.type[0]);
-	printf("%c", wad->header.type[1]);
-	printf("%c", wad->header.type[2]);
-	printf("%c", wad->header.type[3]);
-
-	fclose(wadf);
-
-	return wad;
-}
+WAD* loadWAD(char* wadFile);
 
 #endif

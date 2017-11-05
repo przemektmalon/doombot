@@ -9,7 +9,7 @@
 int main()
 {
 
-	struct WAD* wad = loadWAD("doom1.wad");
+	WAD* wad = loadWAD("doom1.wad");
 
 	return 0;
 }
