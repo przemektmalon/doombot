@@ -1,23 +1,23 @@
 #ifndef MATH_H
 #define MATH_H
 
-struct svec2
+typedef struct svec2
 {
-	short x;
-	short y;
-};
+	signed short x;
+	signed short y;
+} svec2;
 
-struct ivec2
+typedef struct ivec2
 {
 	int x;
 	int y;
-};
+} ivec2;
 
-struct fvec2
+typedef struct fvec2
 {
 	float x;
 	float y;
-};
+} fvec2;
 
 int isDigit(char c);
 

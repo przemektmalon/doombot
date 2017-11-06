@@ -43,8 +43,8 @@ WAD* loadWAD(char* wadFile)
 	Level* currentLevel = malloc(sizeof(Level));
 	//Level currentLevel;
 
-	Vertex inf; inf.x = 16000; inf.y = inf.x;
-	Vertex minf; minf.x = -inf.x; minf.y = -inf.x;
+	svec2 inf; inf.x = 16000; inf.y = inf.x;
+	svec2 minf; minf.x = -inf.x; minf.y = -inf.x;
 
 	currentLevel->mapLowerLeft = inf;
 	currentLevel->mapUpperRight = minf;
@@ -93,7 +93,7 @@ WAD* loadWAD(char* wadFile)
 			}
 			else if (compareString(lumpInfos[i].name, "VERTEXES", 8))
 			{
-				currentLevel->numVerts = lumpInfos[i].size / sizeof(Vertex);
+				currentLevel->numVerts = lumpInfos[i].size / sizeof(svec2);
 				currentLevel->vertices = malloc(lumpInfos[i].size);
 				memcpy(currentLevel->vertices, &data[lumpInfos[i].filepos-12], lumpInfos[i].size);
 

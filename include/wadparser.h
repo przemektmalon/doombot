@@ -37,12 +37,6 @@ typedef struct LineDef
 	short leftSide;
 } LineDef;
 
-typedef struct Vertex
-{
-	signed short x;
-	signed short y;
-} Vertex;
-
 typedef struct Level
 {
 	char name[8];
@@ -50,10 +44,10 @@ typedef struct Level
 	int numLines;
 	LineDef* lines;
 	int numVerts;
-	Vertex* vertices;
+	svec2* vertices;
 
-	Vertex mapLowerLeft;
-	Vertex mapUpperRight;
+	svec2 mapLowerLeft;
+	svec2 mapUpperRight;
 
 } Level;
 
