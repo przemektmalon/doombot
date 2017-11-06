@@ -1,5 +1,8 @@
 #include "wadparser.h"
 
+int compareString(char* a, char* b, int len);
+int isLevelValid(Level* level);
+
 int compareString(char* a, char* b, int len)
 {
 	int ret = 1;
@@ -41,7 +44,6 @@ WAD* loadWAD(char* wadFile)
 	fread(lumpInfos, sizeof(DirectoryEntry) * wad->header.numEntries, 1, wadf);
 
 	Level* currentLevel = malloc(sizeof(Level));
-	//Level currentLevel;
 
 	svec2 inf; inf.x = 16000; inf.y = inf.x;
 	svec2 minf; minf.x = -inf.x; minf.y = -inf.x;
@@ -68,8 +70,6 @@ WAD* loadWAD(char* wadFile)
 						if (isDigit(lumpInfos[i].name[4]))
 							isNameLump = 1;
 
-		//printf("%s\n",lumpInfos[i].name);
-
 		if (isNameLump)
 		{
 			strcpy(currentLevel->name, &lumpInfos[i].name[0]);
@@ -81,11 +81,6 @@ WAD* loadWAD(char* wadFile)
 				currentLevel->numLines = lumpInfos[i].size / sizeof(LineDef);
 				currentLevel->lines = malloc(lumpInfos[i].size);
 				memcpy(currentLevel->lines, &data[lumpInfos[i].filepos-12], lumpInfos[i].size);
-
-				//for (int j = 0; j < currentLevel->numLines; ++j)
-				//{
-					//printf("a: %hd , b: %hd\n", currentLevel->lines[j].beginVertex, currentLevel->lines[j].endVertex);
-				//}
 			}
 			else if (compareString(lumpInfos[i].name, "SEDEDEFS", 8))
 			{
@@ -99,8 +94,6 @@ WAD* loadWAD(char* wadFile)
 
 				for (int j = 0; j < currentLevel->numVerts; ++j)
 				{
-					//printf("V: %i, %i\n", currentLevel->vertices[j].x, currentLevel->vertices[j].y);
-
 					if (currentLevel->vertices[j].x < currentLevel->mapLowerLeft.x)
 						currentLevel->mapLowerLeft.x = currentLevel->vertices[j].x;
 

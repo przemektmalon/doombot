@@ -1,5 +1,5 @@
-#ifndef MATH_H
-#define MATH_H
+#ifndef MATHANDUTIL_H
+#define MATHANDUTIL_H
 
 typedef struct svec2
 {
@@ -20,5 +20,7 @@ typedef struct fvec2
 } fvec2;
 
 int isDigit(char c);
+int ccw(svec2 a, svec2 b, svec2 c);
+int checkIntersection(svec2 a1, svec2 a2, svec2 b1, svec2 b2);
 
 #endif

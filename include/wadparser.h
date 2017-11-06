@@ -5,7 +5,7 @@
 #ifndef WADPARSER_H
 #define WADPARSER_H
 
-#include "math.h"
+#include "mathandutil.h"
 #include <io.h>
 #include <stdio.h>
 #include <stdlib.h> 
