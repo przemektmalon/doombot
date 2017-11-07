@@ -93,12 +93,13 @@ NodeList generateNodes(Level* lvl, int spacing, svec2 start)
 				svec2 ne = nextPos;
 
 				int intersecting = 0;
-				for (int w = 0; w < lvl->numLines; ++w)
+				for (int w = 0; w < lvl->numColliders; ++w)
 				{
-					svec2 ws = lvl->vertices[lvl->lines[w].beginVertex];
-					svec2 we = lvl->vertices[lvl->lines[w].endVertex];
+					svec2 ws = lvl->vertices[lvl->colliders[w].x];
+					svec2 we = lvl->vertices[lvl->colliders[w].y];
 
-					intersecting |= checkIntersection(ws,we,ns,ne);
+					//intersecting |= checkIntersection(ws,we,ns,ne);
+					intersecting |= segmentsIntersect(ws,we,ns,ne);
 
 					if (intersecting)
 						break;

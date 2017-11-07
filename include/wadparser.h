@@ -46,6 +46,9 @@ typedef struct Level
 	int numVerts;
 	svec2* vertices;
 
+	int numColliders;
+	svec2* colliders;
+
 	svec2 mapLowerLeft;
 	svec2 mapUpperRight;
 

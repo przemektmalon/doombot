@@ -80,7 +80,20 @@ WAD* loadWAD(char* wadFile)
 			{
 				currentLevel->numLines = lumpInfos[i].size / sizeof(LineDef);
 				currentLevel->lines = malloc(lumpInfos[i].size);
+				currentLevel->colliders = malloc(lumpInfos[i].size); //TODO: dont need to much space
 				memcpy(currentLevel->lines, &data[lumpInfos[i].filepos-12], lumpInfos[i].size);
+
+				int j = 0;
+				for (int k = 0; k < currentLevel->numLines; ++k)
+				{
+					if (currentLevel->lines[k].flags & 1)
+					{
+						currentLevel->colliders[j].x = currentLevel->lines[k].beginVertex;
+						currentLevel->colliders[j].y = currentLevel->lines[k].endVertex;
+						++j;
+					}
+				}
+				currentLevel->numColliders = j;
 			}
 			else if (compareString(lumpInfos[i].name, "SEDEDEFS", 8))
 			{
