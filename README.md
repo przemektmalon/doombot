@@ -23,4 +23,4 @@ Complete doom levels.
 
 An example of a parsed map file with traversal nodes rendered from an svg.
 
-![Example](https://github.com/przemektmalon/doombot/blob/master/img/traversal.png)
+![Example](https://github.com/przemektmalon/doombot/blob/master/img/traversal2.png)
