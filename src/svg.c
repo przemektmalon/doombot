@@ -101,3 +101,18 @@ void svg_line(svg* psvg, char* stroke, int strokewidth, int x1, int y1, int x2, 
     appendnumbertosvg(psvg, x1);
     appendstringtosvg(psvg, "' />\n");
 }
+
+void svg_circle(svg* psvg, char* fill, char* stroke, int strokewidth, int x, int y, int r)
+{
+    appendstringtosvg(psvg, "    <circle stroke='");
+    appendstringtosvg(psvg, stroke);
+    appendstringtosvg(psvg, "' stroke-width='");
+    appendnumbertosvg(psvg, strokewidth);
+    appendstringtosvg(psvg, "px' cx='");
+    appendnumbertosvg(psvg, x);
+    appendstringtosvg(psvg, "' cy='");
+    appendnumbertosvg(psvg, y);
+    appendstringtosvg(psvg, "' r='");
+    appendnumbertosvg(psvg, r);
+    appendstringtosvg(psvg, "' />\n");
+}

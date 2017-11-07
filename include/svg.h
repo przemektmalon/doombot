@@ -22,6 +22,7 @@ svg* svg_create(int width, int height);
 void svg_finalize(svg* psvg);
 void svg_free(svg* psvg);
 void svg_line(svg* psvg, char* stroke, int strokewidth, int x1, int y1, int x2, int y2);
+void svg_circle(svg* psvg, char* stroke, int strokewidth, int x, int y, int r);
 void svg_save(svg* psvg, char* filepath);
 
 #endif
