@@ -56,8 +56,16 @@ void copyNodeConvertTravel(Node* src, Node* dst, Node* srcListBegin, Node* dstLi
 {
 	dst->x = src->x;
 	dst->y = src->y;
+
 	for (int i = 0; i < 8; ++i)
-		dst->travel[i] = (Node*)(((int)dstListBegin + ((int)src - (int)srcListBegin)));
+	{
+		if (src->travel[i] == 0)
+		{
+			dst->travel[i] = 0;
+			break;
+		}
+		dst->travel[i] = (Node*)(((int)dstListBegin + ((int)src->travel[i] - (int)srcListBegin)));
+	}
 }
 
 NodeList generateNodes(Level* lvl, int spacing, svec2 start)

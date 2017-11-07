@@ -10,7 +10,7 @@ int main()
 	WAD* wad = loadWAD("doom1.wad");
 
 	svec2 s; s.x = 1056; s.y = -3616;
-	NodeList nodes = generateNodes(wad->levels, 30, s);
+	NodeList nodes = generateNodes(wad->levels, 70, s);
 
 	svg* mapsvg = svg_create(2000,2000);
 
@@ -44,6 +44,25 @@ int main()
 
 		//svg_line(mapsvg, "#ff0000", 10, l1.x + 500, l1.y + 1800, l1.x + 505, l1.y + 1805);
 		svg_circle(mapsvg, "#0000ff", "#ff0000", 1, l1.x + 500, l1.y + 1800, 2);
+
+		int j = 0;
+		while (nodes.nodes[i].travel[j] != 0 && j < 8)
+		{
+			//printf("INDEX = %i\n", (int)nodes.nodes[i].travel[j]);
+			svec2 trav;
+			trav.x = nodes.nodes[i].travel[j]->x - nodes.nodes[i].x;
+			trav.x = (short)((float)trav.x * 0.4);
+			trav.y = nodes.nodes[i].travel[j]->y - nodes.nodes[i].y;
+			trav.y = (short)((float)trav.y * 0.3);
+
+			trav.x = (int)(((float)trav.x/(float)(wad->levels[0].mapUpperRight.x - wad->levels[0].mapLowerLeft.x)) * 1024.f);
+			trav.y = (int)(((float)trav.y/(float)(wad->levels[0].mapUpperRight.y - wad->levels[0].mapLowerLeft.y)) * 1024.f);
+
+			//printf("%i , %i\n", (int)trav.x, (int)trav.y);
+
+			svg_line(mapsvg, "#000000", 1, l1.x + 500, l1.y + 1800, l1.x + trav.x + 500, l1.y + trav.y + 1800);
+			++j;
+		}
 	}
 
 	svg_finalize(mapsvg);
